@@ -29,10 +29,10 @@ page = PageParser()
 page.feed(html)
 assert page.title, "Missing document title"
 assert all(name in page.ids for name in ("home", "about", "values", "contact")), "Missing page section"
-assert len(page.images) >= 2, "Expected logo in header and hero"
+assert len(page.images) >= 1, "Expected business imagery"
 assert "mailto:" not in html, "Unconfirmed email address present"
 assert "hello@ogunronbi.com" not in html, "Placeholder email present"
-assert "logo.png" in [img.get("src") for img in page.images], "Uploaded logo not used"
+assert "mikeLOGO.png" in [img.get("src") for img in page.images], "Chicken Farm image missing"
 assert 'href="logo.png"' in html, "Favicon does not use uploaded logo"
 assert "viewport" in html and "@media" in css, "Responsive rules missing"
 for ref in page.refs:
@@ -40,4 +40,4 @@ for ref in page.refs:
         assert ref[1:] in page.ids, f"Broken anchor: {ref}"
     elif not ref.startswith(("http:", "https:", "mailto:", "tel:", "data:")):
         assert (root / ref.split("?")[0]).is_file(), f"Missing local asset: {ref}"
-print("PASS: HTML, assets, anchors, logo, favicon, contact and responsive CSS")
+print("PASS: HTML, assets, anchors, chicken farm image, favicon, contact and responsive CSS")
